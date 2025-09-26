@@ -20,6 +20,8 @@ export class MinecraftContainer extends Container<typeof worker.Env> {
     // Hardcoded password is safe since we're running on a private tailnet
     RCON_PASSWORD: "minecraft",
     RCON_PORT: "25575",
+    INIT_MEMORY: "1G",
+    MAX_MEMORY: "4G",
   };
 
   enableInternet = true;
