@@ -163,3 +163,5 @@ lerna-debug.log*
 .npm
 .eslintcache
 .stylelintcache
+# SpecStory explanation file
+.specstory/.what-is-this.md

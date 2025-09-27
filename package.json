@@ -4,23 +4,31 @@
   "description": "Alchemy Typescript Project",
   "type": "module",
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && vite build",
+    "build:worker": "tsc -b",
+    "build:spa": "vite build",
     "configure": "alchemy configure",
     "version": "alchemy --version",
     "login": "alchemy login",
     "deploy": "alchemy deploy --env-file .env",
     "destroy": "alchemy destroy --env-file .env",
-    "dev": "alchemy dev --env-file .env"
+    "dev": "alchemy dev --env-file .env",
+    "dev:spa": "vite"
   },
   "devDependencies": {
     "@cloudflare/containers": "^0.0.28",
     "@cloudflare/workers-types": "^4.20250926.0",
     "@types/node": "^24.5.2",
+    "@preact/preset-vite": "^2.8.2",
     "alchemy": "0.68.0",
-    "hono": "^4.8.3",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vite": "^5.4.0"
   },
   "dependencies": {
-    "drizzle-orm": "^0.44.5"
+    "@elysiajs/eden": "^1.0.0",
+    "drizzle-orm": "^0.44.5",
+    "elysia": "^1.0.0",
+    "preact": "^10.19.0",
+    "rcon": "^1.1.0"
   }
 }

@@ -9,7 +9,9 @@
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
     "types": ["@cloudflare/workers-types"],
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   },
-  "include": ["src/**/*", "types/**/*", "alchemy.run.ts"]
+  "include": ["src/**/*", "types/**/*", "alchemy.run.ts", "vite.config.ts", "index.html"]
 }

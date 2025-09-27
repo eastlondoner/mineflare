@@ -30,6 +30,6 @@ export const worker = await Worker("test-worker", {
   },
 });
 
-console.log(worker.url);
+console.log("Worker URL:", worker.url);
 
 await app.finalize();
