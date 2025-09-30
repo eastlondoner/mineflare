@@ -12,6 +12,15 @@ export interface PlayerResponse {
 
 export interface ServerInfo {
   version?: string;
+  versionName?: string;
+  versionId?: string;
+  data?: string;
+  series?: string;
+  protocol?: string;
+  buildTime?: string;
+  packResource?: string;
+  packData?: string;
+  stable?: string;
   motd?: string;
   error?: string;
 }

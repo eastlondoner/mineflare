@@ -4,9 +4,9 @@
   "description": "Alchemy Typescript Project",
   "type": "module",
   "scripts": {
-    "build": "tsc -b && vite build",
+    "build": "bun build:worker && bun build:spa",
     "build:worker": "tsc -b",
-    "build:spa": "vite build",
+    "build:spa": "bun build_spa.ts",
     "configure": "alchemy configure",
     "version": "alchemy --version",
     "login": "alchemy login",
@@ -17,18 +17,20 @@
   },
   "devDependencies": {
     "@cloudflare/containers": "^0.0.28",
-    "@cloudflare/workers-types": "^4.20250926.0",
+    "@cloudflare/workers-types": "4.20250926.0",
     "@types/node": "^24.5.2",
-    "@preact/preset-vite": "^2.8.2",
-    "alchemy": "0.68.0",
+    "@types/bun": "^1.2.2",
+    "alchemy": "https://pkg.pr.new/alchemy-run/alchemy@1030",
     "typescript": "^5.9.2",
     "vite": "^5.4.0"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.4.0",
     "@elysiajs/eden": "^1.0.0",
+    "@libsql/client": "^0.15.15",
+    "@preact/signals": "^2.3.1",
     "drizzle-orm": "^0.44.5",
-    "elysia": "^1.0.0",
-    "preact": "^10.19.0",
-    "rcon": "^1.1.0"
+    "elysia": "^1.4.9",
+    "preact": "^10.19.0"
   }
 }

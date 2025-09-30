@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'preact/hooks';
 import type { ServerStatus, PlayerResponse, ServerInfo } from '../types/api';
-
-// In production, this should be an environment variable
-const API_BASE_URL = 'https://cloudflare-container-worker-dev.sam-goodwin-34b.workers.dev';
+import { fetchApi } from '../utils/api';
 
 export function useServerData() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
@@ -17,17 +15,17 @@ export function useServerData() {
 
     try {
       // Fetch server status
-      const statusResponse = await fetch(`${API_BASE_URL}/api/status`);
+      const statusResponse = await fetchApi(`/api/status`);
       const statusData: ServerStatus = await statusResponse.json();
       setStatus(statusData);
 
       // Fetch players
-      const playersResponse = await fetch(`${API_BASE_URL}/api/players`);
+      const playersResponse = await fetchApi(`/api/players`);
       const playersData: PlayerResponse = await playersResponse.json();
       setPlayers(playersData.players || []);
 
       // Fetch server info
-      const infoResponse = await fetch(`${API_BASE_URL}/api/info`);
+      const infoResponse = await fetchApi(`/api/info`);
       const infoData: ServerInfo = await infoResponse.json();
       setInfo(infoData);
 
@@ -39,7 +37,16 @@ export function useServerData() {
   };
 
   useEffect(() => {
+    // Initial fetch
     fetchData();
+
+    // Set up polling every 10 seconds
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 10000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return {

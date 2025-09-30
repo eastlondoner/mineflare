@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+    "lib": ["ESNext"],
     "moduleResolution": "Bundler",
     "strict": true,
     "esModuleInterop": true,
@@ -11,7 +12,9 @@
     "types": ["@cloudflare/workers-types"],
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "composite": true,
+    "outDir": "./.compiled"
   },
-  "include": ["src/**/*", "types/**/*", "alchemy.run.ts", "vite.config.ts", "index.html"]
+  "include": ["src/**/*", "types/**/*", "alchemy.run.ts", "build_spa.ts", "index.html"]
 }
