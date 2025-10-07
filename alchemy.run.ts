@@ -1,15 +1,20 @@
 /// <reference types="@types/node" />
 
-import alchemy from "alchemy";
-import { CloudflareStateStore } from "alchemy/state";
+import alchemy, { type Scope } from "alchemy";
+import { CloudflareStateStore, SQLiteStateStore } from "alchemy/state";
 import { Container, R2Bucket, BunSPA, Worker } from "alchemy/cloudflare";
 import { MinecraftContainer } from "./src/container.ts";
 
+const cloudflareStateStore = (scope: Scope) => new CloudflareStateStore(scope, {
+  forceUpdate: process.env.ALCHEMY_CF_STATE_FORCE_UPDATE?.toLowerCase() === "true",
+  stateToken: alchemy.secret(process.env.ALCHEMY_STATE_TOKEN ?? "minecraft-on-cloudflare-is-awesome-this-is-used-to-encrypt-state-stored-in-cloudflare-but-we-dont-have-any-sensitive-secrets-so-its-fine-to-use-this-token"),
+  scriptName: "mineflare-alchemy-state-store",
+});
+
+const localStateStore = (scope: Scope) => new SQLiteStateStore(scope);
+
 const app = await alchemy(process.env.WRANGLER_CI_OVERRIDE_NAME ?? "mineflare", {
-  stateStore: (scope) => new CloudflareStateStore(scope, {
-    forceUpdate: process.env.ALCHEMY_CF_STATE_FORCE_UPDATE?.toLowerCase() === "true",
-    stateToken: alchemy.secret(process.env.ALCHEMY_STATE_TOKEN ?? "minecraft-on-cloudflare-is-awesome-this-is-used-to-encrypt-state-stored-in-cloudflare-but-we-dont-have-any-sensitive-secrets-so-its-fine-to-use-this-token"),
-  }),
+  stateStore: process.env.NODE_ENV === "development" ? localStateStore : cloudflareStateStore,
   password: process.env.ALCHEMY_PASSWORD ?? "minecraft-on-cloudflare-is-awesome-this-is-used-to-encrypt-secrets-stored-locally-but-we-dont-have-any-so-its-fine-to-use-this-password",
 });
 
